@@ -96,7 +96,7 @@ func downgradeAppToVersion(appId: String, versionId: String, ipaTool: IPATool) {
 
 func promptForVersionId(appId: String, versionIds: [String], ipaTool: IPATool) {
     let isiPad = UIDevice.current.userInterfaceIdiom == .pad
-    let alert = UIAlertController(title: "输入版本ID", message: "选择您要降级到的版本", preferredStyle: isiPad ? .alert : .actionSheet)
+    let alert = UIAlertController(title: "选择版本ID", message: "选择您要降级到的版本", preferredStyle: isiPad ? .alert : .actionSheet)
     for versionId in versionIds {
         alert.addAction(UIAlertAction(title: versionId, style: .default, handler: { _ in
             downgradeAppToVersion(appId: appId, versionId: versionId, ipaTool: ipaTool)
