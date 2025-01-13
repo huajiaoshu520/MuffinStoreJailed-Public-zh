@@ -15,6 +15,8 @@ struct HeaderView: View {
                 .fontWeight(.bold)
             Text("by @mineekdev")
                 .font(.caption)
+            Text("汉化 @Jason")
+                .font(.caption)
         }
     }
 }
@@ -25,12 +27,12 @@ struct FooterView: View {
             VStack {
                 Image(systemName: "exclamationmark.triangle")
                     .foregroundStyle(.red)
-                Text("Use at your own risk!")
+                Text("使用风险自负")
                     .foregroundStyle(.yellow)
                 Image(systemName: "exclamationmark.triangle")
                     .foregroundStyle(.red)
             }
-            Text("I am not responsible for any damage, data loss, or any other issues caused by using this tool.")
+            Text("对于使用此工具所造成的任何损坏、数据丢失或任何其他问题，我概不负责")
                 .font(.caption)
         }
     }
@@ -54,10 +56,10 @@ struct ContentView: View {
             Spacer()
             if !isAuthenticated {
                 VStack {
-                    Text("Log in to the App Store")
+                    Text("登陆 App Store")
                         .font(.headline)
                         .fontWeight(.bold)
-                    Text("Your credentials will be sent directly to Apple.")
+                    Text("您的凭证将直接发送给 Apple.")
                         .font(.caption)
                 }
                 TextField("Apple ID", text: $appleId)
@@ -71,7 +73,7 @@ struct ContentView: View {
                 TextField("2FA Code", text: $code)
                 .textFieldStyle(RoundedBorderTextFieldStyle())
                 .padding()
-                Button("Authenticate") {
+                Button("登陆并认证") {
                     if appleId.isEmpty || password.isEmpty {
                         return
                     }
@@ -91,36 +93,36 @@ struct ContentView: View {
                 HStack {
                     Image(systemName: "info.circle.fill")
                         .foregroundColor(.yellow)
-                    Text("You WILL need to give a 2FA code to successfully log in.")
+                    Text("您将需要提供 2FA 代码才能成功登陆")
                 }
             } else {
                 if isDowngrading {
                     VStack {
                         ProgressView()
                             .progressViewStyle(CircularProgressViewStyle())
-                        Text("Please wait...")
+                        Text("请稍等...")
                             .font(.headline)
                             .fontWeight(.bold)
-                        Text("The app is being downgraded. This may take a while.")
+                        Text("该应用程序正在降级。可能需要一段时间。")
                             .font(.caption)
                         
-                        Button("Done (exit app)") {
+                        Button("完成 (退出 app)") {
                             exit(0) // scuffed
                         }
                         .padding()
                     }
                 } else {
                     VStack {
-                        Text("Downgrade an app")
+                        Text("降级应用程序")
                             .font(.headline)
                             .fontWeight(.bold)
-                        Text("Enter the App Store link of the app you want to downgrade.")
+                        Text("输入您要降级的应用程序的 App Store 链接。")
                             .font(.caption)
                     }
-                    TextField("App share Link", text: $appLink)
+                    TextField("应用分享链接", text: $appLink)
                         .textFieldStyle(RoundedBorderTextFieldStyle())
                         .padding()
-                    Button("Downgrade") {
+                    Button("降级") {
                         if appLink.isEmpty {
                             return
                         }
@@ -138,7 +140,7 @@ struct ContentView: View {
                     }
                     .padding()
 
-                    Button("Log out and exit") {
+                    Button("注销并退出") {
                         isAuthenticated = false
                         EncryptedKeychainWrapper.nuke()
                         EncryptedKeychainWrapper.generateAndStoreKey()
@@ -157,7 +159,7 @@ struct ContentView: View {
             print("Found \(isAuthenticated ? "auth" : "no auth") info in keychain")
             if isAuthenticated {
                 guard let authInfo = EncryptedKeychainWrapper.getAuthInfo() else {
-                    print("Failed to get auth info from keychain, logging out")
+                    print("从钥匙链获取身份验证信息失败，退出登录。")
                     isAuthenticated = false
                     EncryptedKeychainWrapper.nuke()
                     EncryptedKeychainWrapper.generateAndStoreKey()
@@ -169,7 +171,7 @@ struct ContentView: View {
                 let ret = ipaTool?.authenticate()
                 print("Re-authenticated \(ret! ? "successfully" : "unsuccessfully")")
             } else {
-                print("No auth info found in keychain, setting up by generating a key in SEP")
+                print("在密钥链中找不到身份验证信息，通过在SEP中生成密钥进行设置")
                 EncryptedKeychainWrapper.generateAndStoreKey()
             }
         }
