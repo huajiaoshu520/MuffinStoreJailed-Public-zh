@@ -152,7 +152,7 @@ func downgradeApp(appId: String, ipaTool: IPATool) {
     let isiPad = UIDevice.current.userInterfaceIdiom == .pad
     
     let alert = UIAlertController(title: "选择版本获取方式", message: "您想手动版本ID还是从服务器获取版本ID列表？", preferredStyle: isiPad ? .alert : .actionSheet)
-    alert.addAction(UIAlertAction(title: "手动", style: .default, handler: { _ in
+    alert.addAction(UIAlertAction(title: "手动ID", style: .default, handler: { _ in
         promptForVersionId(appId: appId, versionIds: versionIds, ipaTool: ipaTool)
     }))
     alert.addAction(UIAlertAction(title: "服务器", style: .default, handler: { _ in
